@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/magazineCover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/cover_description" />
+
+    <include layout="@layout/sheet_details" />
+
+    <TextView
+        android:id="@+id/numberMagazineActivity"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="18dp"
+        android:background="@drawable/number_round"
+        android:gravity="center"
+        android:textColor="@color/Color_Palet_Flat_CLOUDS"
+        android:tint="@android:color/white"
+        app:fabSize="normal"
+        app:layout_anchor="@id/bottom_sheet"
+        app:layout_anchorGravity="top|end"
+        app:rippleColor="@android:color/white" />
+
+
+</android.support.design.widget.CoordinatorLayout>

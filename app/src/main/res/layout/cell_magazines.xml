@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="5dp">
+
+    <LinearLayout
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_gravity="end"
+        android:layout_marginBottom="-25dp"
+        android:background="@drawable/number_round"
+        android:elevation="8dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/numberMagazine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="#12"
+            android:textColor="@color/ColorSupremeWhite"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_main_1_4_1"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:layout_marginStart="@dimen/main_card_margin_horizontal"
+        android:layout_marginTop="@dimen/main_card_margin_vertical"
+        android:background="?attr/selectableItemBackground"
+        android:foreground="?attr/selectableItemBackground"
+        card_view:cardCornerRadius="@dimen/card_recycler_corner_radius"
+        card_view:cardElevation="@dimen/card_recycler_elevation"
+        card_view:cardUseCompatPadding="true">
+
+        <ImageView
+            android:id="@+id/imgMagazine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/cover_description" />
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginTop="-35dp"
+        android:elevation="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/custMagazine"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@drawable/price_round"
+            android:gravity="center"
+            android:textColor="@color/ColorSupremeWhite" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

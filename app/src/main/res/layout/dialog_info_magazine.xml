@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="310dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="-35dp"
+        android:elevation="10dp">
+
+        <TextView
+            android:textSize="12sp"
+            android:id="@+id/numberMagazine"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/number_round"
+            android:gravity="center"
+            android:textColor="@color/Color_Palet_Flat_CLOUDS"
+            android:tint="@android:color/white"
+            app:layout_anchor="@id/bottom_sheet" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/magazineCover"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/cover_description" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:paddingTop="10dp"
+                    android:id="@+id/magazineName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/Color_Palet_Flat_MIDNIGHT_BLUE"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <Button
+                    android:clickable="true"
+                    android:id="@+id/btnMoreDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:background="@color/transparent"
+                    android:paddingBottom="20dp"
+                    android:text="@string/ver_detalhes_string"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/btn_favorito"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_favorite_border_black_24dp"
+                    android:contentDescription="@string/cover_description" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="-35dp"
+        android:elevation="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/numberPrice"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:background="@drawable/price_round"
+            android:gravity="center"
+            android:textColor="@color/Color_Palet_Flat_CLOUDS"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:tint="@android:color/white"
+            app:layout_anchor="@id/bottom_sheet" />
+
+    </LinearLayout>
+
+</LinearLayout>

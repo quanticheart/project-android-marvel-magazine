@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/Color_Palet_Flat_ALIZARIN</color>
+    <color name="colorPrimaryDark">@color/Color_Palet_Flat_POMEGRANATE</color>
+    <color name="colorAccent">@color/Color_Palet_Flat_MIDNIGHT_BLUE</color>
+
+    <!--Paleta de Cores FLAT UI V1-->
+    <color name="Color_Palet_Flat_TURQUOISE">#1abc9c</color>
+    <color name="Color_Palet_Flat_GREEN_SEA">#16a085</color>
+    <color name="Color_Palet_Flat_EMERALD">#2ecc71</color>
+    <color name="Color_Palet_Flat_NEPHRITIS">#27ae60</color>
+    <color name="Color_Palet_Flat_SUN_FLOEWS">#f1c40f</color>
+    <color name="Color_Palet_Flat_ORANGE">#f39c12</color>
+    <color name="Color_Palet_Flat_CARROT">#e67e22</color>
+    <color name="Color_Palet_Flat_PUMPKIN">#d35400</color>
+    <color name="Color_Palet_Flat_PETER_RIVER">#3498db</color>
+    <color name="Color_Palet_Flat_BELIZE_HOLE">#2980b9</color>
+    <color name="Color_Palet_Flat_ALIZARIN">#e74c3c</color>
+    <color name="Color_Palet_Flat_POMEGRANATE">#c0392b</color>
+    <color name="Color_Palet_Flat_AMETHYST">#9b59b6</color>
+    <color name="Color_Palet_Flat_WISTERIA">#8e44ad</color>
+    <color name="Color_Palet_Flat_CLOUDS">#ecf0f1</color>
+    <color name="Color_Palet_Flat_SILVER">#bdc3c7</color>
+    <color name="Color_Palet_Flat_WET_ASPHALT">#34495e</color>
+    <color name="Color_Palet_Flat_MIDNIGHT_BLUE">#2c3e50</color>
+    <color name="Color_Palet_Flat_CONCRETE">#95a5a6</color>
+    <color name="Color_Palet_Flat_ASBESTOS">#7f8c8d</color>
+
+</resources>

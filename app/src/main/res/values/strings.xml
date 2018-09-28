@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">S.H.I.E.L.D</string>
+    <string name="cover_description">Cover</string>
+    <string name="ver_detalhes_string">Ver Detalhes</string>
+    <string name="mais_detalhes_na_web">Mais Detalhes na Web</string>
+    <string name="_00_00_00_s_20_20">00/00/00 ás 20:20</string>
+    <string name="magazine_name">Magazine Name</string>
+    <string name="magazine">Magazine</string>
+    <string name="_26_pages">26 Pages</string>
+    <string name="searsh_magazine">Searsh Magazine</string>
+    <string name="hellow">Hellow??</string>
+</resources>

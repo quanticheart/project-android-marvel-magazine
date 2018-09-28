@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="85dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="1dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/swipe_up_handle" />
+
+            <TextView
+                android:id="@+id/magazineName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="50dp"
+                android:text="@string/magazine_name"
+                android:textColor="@color/Color_Palet_Flat_MIDNIGHT_BLUE"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:paddingTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/moreDetailsInWeb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:gravity="center|left"
+                    android:text="@string/mais_detalhes_na_web"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <TextView
+                    android:id="@+id/dataPosted"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:gravity="center|right"
+                    android:text="@string/_00_00_00_s_20_20"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageView
+                    android:id="@+id/btn_favorito"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right|center"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/cover_description"
+                    android:src="@drawable/ic_favorite_border_black_24dp"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/formatMagazine"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:gravity="center|left"
+                    android:text="@string/magazine"
+                    android:textColor="@color/Color_Palet_Flat_MIDNIGHT_BLUE"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+                <TextView
+                    android:id="@+id/numberPagesMagazine"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:gravity="center|right"
+                    android:text="@string/_26_pages"
+                    android:textColor="@color/Color_Palet_Flat_MIDNIGHT_BLUE"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/textMagazine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:background="@color/transparent"
+                    android:text="@string/mais_detalhes_na_web"
+                    android:textColor="@color/Color_Palet_Flat_MIDNIGHT_BLUE"
+                    android:textSize="13sp"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
