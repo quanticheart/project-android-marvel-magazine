@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import qunaticheart.com.marvelmagazine.Helpers.SplashHelper;
+
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class BaseActivity extends AppCompatActivity {
 
     //add initial Functions Here
     private void initActivity() {
-
+        new SplashHelper(activity);
     }
 
 }
