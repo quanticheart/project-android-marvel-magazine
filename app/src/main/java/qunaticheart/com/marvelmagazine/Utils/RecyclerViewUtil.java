@@ -8,20 +8,7 @@ import android.widget.LinearLayout;
 
 public class RecyclerViewUtil {
 
-    public static LinearLayoutManager Funcao_LinearLayoutManager(Activity activity, Boolean horizontal) {
-
-        LinearLayoutManager linearLayoutManager = null;
-
-        if (horizontal) {
-            linearLayoutManager = new LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false);
-        } else {
-            linearLayoutManager = new LinearLayoutManager(activity, LinearLayout.VERTICAL, false);
-        }
-
-        return linearLayoutManager;
-    }
-
-    public static GridLayoutManager Funcao_GridLayoutManager(Activity activity) {
+    public static GridLayoutManager gridLayoutManager(Activity activity) {
 
         GridLayoutManager gridLayoutManager = null;
 

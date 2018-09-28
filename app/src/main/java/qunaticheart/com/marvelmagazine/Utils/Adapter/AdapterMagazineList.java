@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import qunaticheart.com.marvelmagazine.Conexao.Constants.ConstantsConnect;
 import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
 import qunaticheart.com.marvelmagazine.R;
 import qunaticheart.com.marvelmagazine.Utils.ActivityUtil;

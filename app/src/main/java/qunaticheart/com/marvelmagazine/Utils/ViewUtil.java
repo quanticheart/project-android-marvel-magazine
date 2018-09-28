@@ -1,18 +1,19 @@
 package qunaticheart.com.marvelmagazine.Utils;
 
-import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
-
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
-
 import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
 import qunaticheart.com.marvelmagazine.R;
 
 public class ViewUtil {
 
+    /**
+     *
+     * @param btn_item
+     * @param fav
+     */
     private static void statusLike(ImageView btn_item, int fav) {
         AlphaAnimation alphaAnimationShowIcon = new AlphaAnimation(0.2f, 1.0f);
         alphaAnimationShowIcon.setDuration(500);
@@ -28,15 +29,30 @@ public class ViewUtil {
         }
     }
 
+    /**
+     *
+     * @param timestamp
+     * @return
+     */
     public static String timestampToStringFormated(List<MagazineData.dates> timestamp) {
         String date[] = timestamp.get(0).getDate().split("T");
         return date[0];
     }
 
+    /**
+     *
+     * @param numero
+     * @return
+     */
     public static String moneyFormate(float numero) {
         return NumberFormat.getCurrencyInstance().format(numero);
     }
 
+    /**
+     *
+     * @param numero
+     * @return
+     */
     public static String pageCountFormate(int numero) {
         return numero+" Pages";
     }

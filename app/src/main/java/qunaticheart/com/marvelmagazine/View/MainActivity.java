@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private static void initRecyclerView(List<MagazineData> list) {
-        GridLayoutManager gridLayoutManager = RecyclerViewUtil.Funcao_GridLayoutManager(activity);
+        GridLayoutManager gridLayoutManager = RecyclerViewUtil.gridLayoutManager(activity);
         recyclerView.setLayoutManager(gridLayoutManager);
         adapter = new AdapterMagazineList(
                 activity,
