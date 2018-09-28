@@ -232,9 +232,9 @@ public class AdapterMagazineList extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private void initActions_NormalView(final RecyclerViewHolder viewHolder, MagazineData magazine) {
 
-        initGlide(activity, ConstantsConnect.getFantasticImageCover(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), viewHolder.imageView);
+        initGlide(activity, ViewUtil.getFantasticImageCover(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), viewHolder.imageView);
 
-        viewHolder.numberMagazine.setText(ConstantsConnect.getNumberFormated(magazine.getIssueNumber()));
+        viewHolder.numberMagazine.setText(ViewUtil.getNumberFormated(magazine.getIssueNumber()));
         viewHolder.custMagazine.setText(ViewUtil.moneyFormate(magazine.getPrices().get(0).getPrice()));
 
     }

@@ -50,10 +50,10 @@ public class MagazineActivity extends BaseActivity {
 
         imgMagazine = findViewById(R.id.magazineCover);
 
-        initGlide(activity, ConstantsConnect.getFullImageCover(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), imgMagazine);
+        initGlide(activity, ViewUtil.getFullImageCover(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), imgMagazine);
 
         TextView number = findViewById(R.id.numberMagazineActivity);
-        number.setText(ConstantsConnect.getNumberFormated(magazine.getIssueNumber()));
+        number.setText(ViewUtil.getNumberFormated(magazine.getIssueNumber()));
 
         ((TextView) llBottomSheet.findViewById(R.id.magazineName)).setText(magazine.getTitle());
 

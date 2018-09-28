@@ -28,10 +28,10 @@ public class DialogUtil {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_info_magazine);
 
-        initGlide(activity, ConstantsConnect.getFantasticImageSquare(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), ((ImageView) dialog.findViewById(R.id.magazineCover)));
+        initGlide(activity, ViewUtil.getFantasticImageSquare(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), ((ImageView) dialog.findViewById(R.id.magazineCover)));
 
         ((TextView) dialog.findViewById(R.id.magazineName)).setText(magazine.getTitle());
-        ((TextView) dialog.findViewById(R.id.numberMagazine)).setText(ConstantsConnect.getNumberFormated(magazine.getIssueNumber()));
+        ((TextView) dialog.findViewById(R.id.numberMagazine)).setText(ViewUtil.getNumberFormated(magazine.getIssueNumber()));
         ((TextView) dialog.findViewById(R.id.numberPrice)).setText(ViewUtil.moneyFormate(magazine.getPrices().get(0).getPrice()));
 
         Button moreDetails = dialog.findViewById(R.id.btnMoreDetails);
