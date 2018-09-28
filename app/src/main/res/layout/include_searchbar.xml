@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@color/colorPrimary"
+    android:translationZ="5dp"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -22,8 +23,8 @@
             android:layout_gravity="center"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_search_black_24dp"
-            android:contentDescription="@string/cover_description" />
+            android:contentDescription="@string/cover_description"
+            android:src="@drawable/ic_search_black_24dp" />
 
         <TextView
             android:id="@+id/tv_include_busca"
@@ -44,8 +45,8 @@
             android:layout_gravity="center"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_mic_black_24dp"
-            android:contentDescription="@string/cover_description" />
+            android:contentDescription="@string/cover_description"
+            android:src="@drawable/ic_mic_black_24dp" />
 
     </LinearLayout>
 
