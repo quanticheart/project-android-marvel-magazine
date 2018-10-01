@@ -165,7 +165,7 @@ public class ListMagazinesFragment extends BaseFragment implements MainMagazineA
     }
 
     @Override
-    public void searchMagazine(String textSearsh) {
+    public void searchMagazineList(String textSearsh) {
         searshFilterMagazine(textSearsh);
     }
 

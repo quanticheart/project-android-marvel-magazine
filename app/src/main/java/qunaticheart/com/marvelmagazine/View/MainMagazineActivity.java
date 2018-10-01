@@ -30,7 +30,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 import qunaticheart.com.marvelmagazine.Base.BaseActivity;
-import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
 import qunaticheart.com.marvelmagazine.Conexao.Model.Searsh;
 import qunaticheart.com.marvelmagazine.R;
 import qunaticheart.com.marvelmagazine.Utils.LoggerUtils;
@@ -66,7 +65,7 @@ public class MainMagazineActivity extends BaseActivity {
     private static Dialog dialogSearsh;
 
     //ViewPager
-    private static ViewPager viewPager;
+    private ViewPager viewPager;
 
     //Fragments
     LikeMagazineFragment likeMagazineFragment;
@@ -174,7 +173,7 @@ public class MainMagazineActivity extends BaseActivity {
                     String textCell = hmAux.getTextSearsh();
                     searshBarText.setText(textCell);
                     viewPager.setCurrentItem(0);
-                    searchMagazine.searchMagazine(textCell);
+                    searchMagazine.searchMagazineList(textCell);
                     dialogSearsh.dismiss();
                 }
             });
@@ -228,7 +227,7 @@ public class MainMagazineActivity extends BaseActivity {
                         searshBarText.setText(textSearsh);
 //                        searshFilterMagazine(textSearsh);
                         viewPager.setCurrentItem(0);
-                        searchMagazine.searchMagazine(textSearsh);
+                        searchMagazine.searchMagazineList(textSearsh);
                         dialogSearsh.dismiss();
                     }
 
@@ -337,7 +336,7 @@ public class MainMagazineActivity extends BaseActivity {
                     searshBarText.setText((result.get(0)));
 //                    searshFilterMagazine(result.get(0));
                     viewPager.setCurrentItem(0);
-                    searchMagazine.searchMagazine(result.get(0));
+                    searchMagazine.searchMagazineList(result.get(0));
                     dialogSearsh.dismiss();
                 }
                 break;
@@ -350,6 +349,6 @@ public class MainMagazineActivity extends BaseActivity {
     }
 
     public interface searchMagazine {
-        void searchMagazine(String textSearsh);
+        void searchMagazineList(String textSearsh);
     }
 }
