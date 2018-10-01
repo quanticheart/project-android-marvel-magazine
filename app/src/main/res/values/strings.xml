@@ -9,4 +9,11 @@
     <string name="_26_pages">26 Pages</string>
     <string name="searsh_magazine">Search Magazine</string>
     <string name="hellow">Hellow??</string>
+    <string name="comix_title">Comix</string>
+    <string name="like_title">My Liked</string>
+    <string name="msg_liked">Liked</string>
+    <string name="msg_desliked">Desliked</string>
+    <string name="end_list">End List</string>
+    <string name="search_something">Enter Something For Search</string>
+    <string name="text_search_magazine">search for a magazine</string>
 </resources>

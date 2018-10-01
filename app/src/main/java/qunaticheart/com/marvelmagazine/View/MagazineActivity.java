@@ -16,6 +16,7 @@ import qunaticheart.com.marvelmagazine.Base.BaseActivity;
 import qunaticheart.com.marvelmagazine.Base.WebViewActivity;
 import qunaticheart.com.marvelmagazine.Conexao.Constants.ConstantsConnect;
 import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
+import qunaticheart.com.marvelmagazine.Controller.MainController;
 import qunaticheart.com.marvelmagazine.R;
 import qunaticheart.com.marvelmagazine.Utils.ActivityUtil;
 import qunaticheart.com.marvelmagazine.Utils.Adapter.AdapterMagazineList;
@@ -81,6 +82,17 @@ public class MagazineActivity extends BaseActivity {
         ((TextView) llBottomSheet.findViewById(R.id.formatMagazine)).setText(magazine.getFormat());
         ((TextView) llBottomSheet.findViewById(R.id.numberPagesMagazine)).setText(ViewUtil.pageCountFormate(magazine.getPageCount()));
         ((TextView) llBottomSheet.findViewById(R.id.textMagazine)).setText(magazine.getDescription());
+
+        final ImageView imageViewLike = llBottomSheet.findViewById(R.id.btn_like);
+        ViewUtil.statusLikeView(imageViewLike, magazine);
+        imageViewLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                magazine.setLike(ViewUtil.updateMagazineLikeStatus(activity, magazine));
+                ViewUtil.statusLikeView(imageViewLike, magazine);
+                new MainController(activity).setLike(magazine);
+            }
+        });
 
         bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

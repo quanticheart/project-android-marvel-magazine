@@ -1,16 +1,19 @@
 package qunaticheart.com.marvelmagazine.Utils;
 
+import android.app.Activity;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import java.text.NumberFormat;
 import java.util.List;
+
 import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
 import qunaticheart.com.marvelmagazine.R;
 
 public class ViewUtil {
 
     /**
-     *
      * @param btn_item
      * @param fav
      */
@@ -30,7 +33,6 @@ public class ViewUtil {
     }
 
     /**
-     *
      * @param timestamp
      * @return
      */
@@ -40,7 +42,6 @@ public class ViewUtil {
     }
 
     /**
-     *
      * @param numero
      * @return
      */
@@ -49,12 +50,11 @@ public class ViewUtil {
     }
 
     /**
-     *
      * @param numero
      * @return
      */
     public static String pageCountFormate(int numero) {
-        return numero+" Pages";
+        return numero + " Pages";
     }
 
     /**
@@ -87,6 +87,31 @@ public class ViewUtil {
     public static String getNumberFormated(Integer number) {
         return "#" + number;
     }
+
+    public static void statusLikeView(ImageView imageView, MagazineData magazine) {
+
+        AlphaAnimation alphaAnimationShowIcon = new AlphaAnimation(0.2f, 1.0f);
+        alphaAnimationShowIcon.setDuration(500);
+
+        if (magazine.getLike().equals("0")) {
+            imageView.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            imageView.startAnimation(alphaAnimationShowIcon);
+        } else {
+            imageView.setImageResource(R.drawable.ic_favorite_black_24dp);
+            imageView.startAnimation(alphaAnimationShowIcon);
+        }
+    }
+
+    public static String updateMagazineLikeStatus(Activity activity, MagazineData magazine) {
+        if (magazine.getLike().equals("0")) {
+            LoggerUtils.showMsg(activity, activity.getString(R.string.msg_liked));
+            return "1";
+        } else {
+            LoggerUtils.showMsg(activity, activity.getString(R.string.msg_desliked));
+            return "0";
+        }
+    }
+
 
 //========================================================================
 //    Utils

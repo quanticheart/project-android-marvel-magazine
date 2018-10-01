@@ -13,6 +13,7 @@ public class MagazineData implements Serializable {
     private String description;
     private String modified;
     private String isbn;
+    private String like;
     private String upc;
     private String diamondCode;
     private String ean;
@@ -24,6 +25,18 @@ public class MagazineData implements Serializable {
     private List<dates> dates;
     private List<urls> urls;
 
+     public MagazineData() {
+       like = "0";
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public String getLike() {
+        return like;
+    }
+
+    public void setLike(String like) {
+        this.like = like;
+    }
 
     public Integer getId() {
         return id;
@@ -169,9 +182,11 @@ public class MagazineData implements Serializable {
         this.urls = urls;
     }
 
+
+
     //===========================================================================
 
-    public class thumbnail implements Serializable {
+    public static class thumbnail implements Serializable {
 
         public String path;
 
@@ -194,7 +209,7 @@ public class MagazineData implements Serializable {
         }
     }
 
-    public class prices implements Serializable {
+    public static class prices implements Serializable {
 
         public String type;
 
@@ -218,7 +233,7 @@ public class MagazineData implements Serializable {
 
     }
 
-    public class urls implements Serializable {
+    public static class urls implements Serializable {
 
         public String type;
 
@@ -241,7 +256,7 @@ public class MagazineData implements Serializable {
         }
     }
 
-    public class dates implements Serializable {
+    public static class dates implements Serializable {
 
         public String type;
 

@@ -3,13 +3,10 @@ package qunaticheart.com.marvelmagazine.Conexao;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.support.annotation.NonNull;
-
-import java.util.Map;
-
 import qunaticheart.com.marvelmagazine.Conexao.Helpers.ApiClient;
 import qunaticheart.com.marvelmagazine.Conexao.Model.ListMagazine;
 import qunaticheart.com.marvelmagazine.Conexao.Utils.ConnectUtils;
-import qunaticheart.com.marvelmagazine.View.MainActivity;
+import qunaticheart.com.marvelmagazine.View.Fragments.ListMagazinesFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,10 +21,8 @@ public class Connect {
     //Contructor
     @SuppressLint("StaticFieldLeak")
     private static Activity activity;
-    private static int connectionID;
-    private static Map<String, String> mapParameters;
+    private static Connection connectionID;
     private static int offsetConnection;
-    private Response<ListMagazine> wsResponse;
 
     //Retrofit
     private ApiInterface apiInterface;
@@ -41,11 +36,16 @@ public class Connect {
         apiInterface = ApiClient.getClient(activity).create(ApiInterface.class);
     }
 
+   public enum Connection {
+        initialData,
+        getMoreData
+    }
+
     /**
-     * @param connectionID
-     * @param showLoading
+     * @param connectionID Connection Enum
+     * @param showLoading Show Loading?
      */
-    public void getDataFrom(int connectionID, Boolean showLoading, int offset) {
+    public void getDataFrom(Connection connectionID, Boolean showLoading, int offset) {
         if (showLoading) {
             ConnectUtils.showSimpleLoadingDialog(activity);
         }
@@ -53,20 +53,18 @@ public class Connect {
         initWsConection(connectionID);
     }
 
-    private void initWsConection(int ID) {
+    private void initWsConection(Connection ID) {
         connectionID = ID;
-        switch (connectionID) {
-            case 1:
-                connectDescription = "Initial Magarine Loads";
+        switch (ID) {
+            case initialData:
+            connectDescription = "Initial Magarine Loads";
 
-//                String url = ConnectUtils.getUrlForConection();
+            String ts = Long.toString(System.currentTimeMillis() / 1000);
+            String publicK = "42f63a8d6c0a9760154b9c8e1284a9a1";
+            String privateK = "11f10099031b272383d15c345a1bb1df798a2c7d";
 
-                String ts = Long.toString(System.currentTimeMillis() / 1000);
-                String publicK = "42f63a8d6c0a9760154b9c8e1284a9a1";
-                String privateK = "11f10099031b272383d15c345a1bb1df798a2c7d";
-
-                call = apiInterface.getMagazines(ts, publicK, ConnectUtils.getHashForConection(ts + privateK + publicK), offsetConnection);
-                break;
+            call = apiInterface.getMagazines(ts, publicK, ConnectUtils.getHashForConection(ts + privateK + publicK), offsetConnection);
+            break;
         }
 
         call.enqueue(new Callback<ListMagazine>() {
@@ -74,7 +72,7 @@ public class Connect {
             public void onResponse(@NonNull Call<ListMagazine> call, @NonNull Response<ListMagazine> response) {
                 logFunction(response, connectDescription);
 
-                if (response.isSuccessful()) {// retorno entre 200 a 300 http status
+                if (response.isSuccessful()) {// Return in 200 at 300 http status
                     setWsResponse(response);
                 }
                 ConnectUtils.hideSimpleLoadingDialog();
@@ -92,16 +90,12 @@ public class Connect {
 
     private void setWsResponse(Response<ListMagazine> wsResponse) {
         switch (connectionID) {
-            case 1:
-            case 2:
-                MainActivity.initList(wsResponse);
+            case initialData:
+            case getMoreData:
+                ListMagazinesFragment.initList(wsResponse);
                 break;
 
         }
-        this.wsResponse = wsResponse;
     }
 
-    public Response<ListMagazine> getWsResponse() {
-        return wsResponse;
-    }
 }

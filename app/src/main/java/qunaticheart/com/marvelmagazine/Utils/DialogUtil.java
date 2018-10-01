@@ -6,14 +6,13 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Objects;
 
-import qunaticheart.com.marvelmagazine.Conexao.Constants.ConstantsConnect;
 import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
+import qunaticheart.com.marvelmagazine.Controller.MainController;
 import qunaticheart.com.marvelmagazine.R;
 import qunaticheart.com.marvelmagazine.View.MagazineActivity;
 
@@ -34,8 +33,7 @@ public class DialogUtil {
         ((TextView) dialog.findViewById(R.id.numberMagazine)).setText(ViewUtil.getNumberFormated(magazine.getIssueNumber()));
         ((TextView) dialog.findViewById(R.id.numberPrice)).setText(ViewUtil.moneyFormate(magazine.getPrices().get(0).getPrice()));
 
-        Button moreDetails = dialog.findViewById(R.id.btnMoreDetails);
-        moreDetails.setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.btnMoreDetails).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -46,10 +44,25 @@ public class DialogUtil {
 
             }
         });
+        final ImageView imageViewLike = dialog.findViewById(R.id.btn_like);
+        ViewUtil.statusLikeView(imageViewLike, magazine);
+        imageViewLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                magazine.setLike(ViewUtil.updateMagazineLikeStatus(activity, magazine));
+                ViewUtil.statusLikeView(imageViewLike, magazine);
+                new MainController(activity).setLike(magazine);
+            }
+        });
 
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true);
         dialog.show();
     }
+
+
+//
+//
+//    }
 
 }

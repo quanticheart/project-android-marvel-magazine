@@ -12,6 +12,8 @@ public class SystemUtil {
     private static Snackbar snackbar;
     private static Activity activity;
 
+    private static ShowMsg showMsg;
+
     public SystemUtil(Activity mActivity) {
         activity = mActivity;
     }
@@ -23,21 +25,33 @@ public class SystemUtil {
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            if (snackbar != null) {
-                snackbar.dismiss();
-                snackbar = null;
-            }
+//            if (snackbar != null) {
+//                snackbar.dismiss();
+//                snackbar = null;
+//            }
+            showMsg.hideMsg();
             return true;
         } else {
             try {
-                snackbar = Snackbar.make(Objects.requireNonNull(activity.getCurrentFocus()), "No Conection", Snackbar.LENGTH_INDEFINITE);
-                snackbar.show();
+//                if (snackbar == null) {
+//                    snackbar = Snackbar.make(Objects.requireNonNull(activity.), "No Conection", Snackbar.LENGTH_INDEFINITE);
+//                    snackbar.show();
+//                }
+                showMsg.showMsg();
             } catch (Exception e) {
             }
 
             return false;
         }
+    }
 
+    public static void setShowMsg(ShowMsg showMsg) {
+        SystemUtil.showMsg = showMsg;
+    }
+
+    public interface ShowMsg {
+         void showMsg();
+         void hideMsg();
     }
 
 }

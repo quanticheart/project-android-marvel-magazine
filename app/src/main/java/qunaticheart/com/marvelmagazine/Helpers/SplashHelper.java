@@ -1,16 +1,12 @@
 package qunaticheart.com.marvelmagazine.Helpers;
 
 import android.app.Activity;
-
-import com.master.killercode.loginverifier.LoginVerifier;
 import com.master.killercode.wizard.GetWizardStatus;
 import com.master.killercode.wizard.Splash.SplashActivity;
 import com.master.killercode.wizard.Wizard.WizardPageModel;
-
 import java.util.ArrayList;
-
 import qunaticheart.com.marvelmagazine.R;
-import qunaticheart.com.marvelmagazine.View.MainActivity;
+import qunaticheart.com.marvelmagazine.View.MainMagazineActivity;
 
 /**
  * Created by Jonh on 16/08/2018.
@@ -46,7 +42,7 @@ public class SplashHelper {
         GetWizardStatus wPrefs = new GetWizardStatus(activity); // Create GetWizardStatus with Context
         if (!wPrefs.getStatusFinishedFrom(SPLASH_WIZARD_INIT)) {
 
-            SplashActivity splash = new SplashActivity(activity, MainActivity.class); // Create Splash With Wizard, init With Activity and Activity After Wizard Activity
+            SplashActivity splash = new SplashActivity(activity, MainMagazineActivity.class); // Create Splash With Wizard, init With Activity and Activity After Wizard Activity
             splash.setSplashFinished(SPLASH_WIZARD_INIT);
             splash.setWizard(wList); // add ArrayPage For WizardActivity
             splash.setWizardThemeGoogle(); // set Theme Google in Wizard

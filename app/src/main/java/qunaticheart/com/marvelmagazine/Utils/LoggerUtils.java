@@ -20,14 +20,17 @@ public class LoggerUtils {
         }
     }
 
-    public static void callToast(Activity activity, String s){
+    public static void callToast(Activity activity, String s) {
         Toast.makeText(activity, s, Toast.LENGTH_SHORT).show();
     }
 
     //===
 
-    private static boolean getStatusDebug(){
+    private static boolean getStatusDebug() {
         return BuildConfig.DEBUG;
     }
 
+    public static void showMsg(Activity activity, String msg) {
+        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -19,7 +19,6 @@ public class DB_Busca extends Dao {
 
     public static final String TABELA_HISTORICO_BUSCA = "tabela_historico_busca";
 
-
     //chamar esta função para verificar se o DB existe , se não existir , ele cria
     public void CriaBaseDeDadosCompleta() {
         DeletaBanco();

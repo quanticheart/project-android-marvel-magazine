@@ -4,12 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -32,86 +30,92 @@ import java.util.Locale;
 import java.util.Objects;
 
 import qunaticheart.com.marvelmagazine.Base.BaseActivity;
-import qunaticheart.com.marvelmagazine.BroadCast.MyReceiver;
-import qunaticheart.com.marvelmagazine.BroadCast.SystemUtil;
-import qunaticheart.com.marvelmagazine.Conexao.Connect;
-import qunaticheart.com.marvelmagazine.Conexao.Model.ListMagazine;
 import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
 import qunaticheart.com.marvelmagazine.Conexao.Model.Searsh;
 import qunaticheart.com.marvelmagazine.R;
-import qunaticheart.com.marvelmagazine.Utils.Adapter.AdapterMagazineList;
 import qunaticheart.com.marvelmagazine.Utils.LoggerUtils;
-import qunaticheart.com.marvelmagazine.Utils.RecyclerViewUtil;
 import qunaticheart.com.marvelmagazine.Utils.Searsh.AdapterSearsh;
 import qunaticheart.com.marvelmagazine.Utils.Searsh.DB_Busca;
-import retrofit2.Response;
+import qunaticheart.com.marvelmagazine.View.Fragments.ListMagazinesFragment;
+import qunaticheart.com.marvelmagazine.View.Fragments.LikeMagazineFragment;
+import qunaticheart.com.marvelmagazine.View.Fragments.Adapter.ViewPagerAdapter;
 
-public class MainActivity extends BaseActivity {
+public class MainMagazineActivity extends BaseActivity {
+
+    public static void setLoadData(LoadData mLoadData) {
+        loadData = mLoadData;
+    }
+
+    private static LoadData loadData;
+
+    public static void setSearchMagazine(MainMagazineActivity.searchMagazine searchMagazine) {
+        MainMagazineActivity.searchMagazine = searchMagazine;
+    }
+
+    private static searchMagazine searchMagazine;
 
     //Searsh
     private LinearLayout llSearsh;
     private TextView searshBarText;
-    //SwipeRefreshLayout
-    @SuppressLint("StaticFieldLeak")
-    private static SwipeRefreshLayout refreshLayout;
+    static List<Searsh> database = new ArrayList<>();
+    static List<Searsh> databaseTmp = new ArrayList<>();
 
-    //RecyclerView
     @SuppressLint("StaticFieldLeak")
-    private static RecyclerView recyclerView;
-    @SuppressLint("StaticFieldLeak")
-    private static AdapterMagazineList adapter;
+    private static ListView listView_busca;
+    private static PopupWindow popupWindow;
+    private static Dialog dialogSearsh;
 
-    //Connect
-    @SuppressLint("StaticFieldLeak")
-    private static Connect connect;
+    //ViewPager
+    private static ViewPager viewPager;
+
+    //Fragments
+    LikeMagazineFragment likeMagazineFragment;
+    ListMagazinesFragment listMagazinesFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        connect = new Connect(activity);
-        connect.getDataFrom(1, false, cursor);
-
-        initBroadcast();
         initVars();
         initActions();
-        initRecyclerView(databaseMagazine);
-
-    }
-
-    private void initBroadcast() {
-
-        new SystemUtil(activity);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        MyReceiver myReceiver = new MyReceiver();
-        registerReceiver(myReceiver, filter);
 
     }
 
     private void initVars() {
+
         llSearsh = findViewById(R.id.ll_include_searchbar);
         searshBarText = findViewById(R.id.tv_include_busca);
-        recyclerView = findViewById(R.id.recycler_view_recycler_view);
-        refreshLayout = findViewById(R.id.swipe_refresh_layout_recycler_view);
+
+        viewPager = findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(2);
+
+        setupViewPager(viewPager);
+
+        TabLayout tabLayout = findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void initActions() {
 
-        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onRefresh() {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                if (SystemUtil.connection()) {
-                    databaseMagazine.clear();
-                    cursor = 0;
-                    initRecyclerView(databaseMagazine);
-                    newConection();
-                }else{
-                    refreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                viewPager.setCurrentItem(position, false);
+                if (position == 1) {
+                    loadData.load();
                 }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
@@ -121,79 +125,21 @@ public class MainActivity extends BaseActivity {
                 openSearhDialog();
             }
         });
-    }
-
-    private static void initRecyclerView(List<MagazineData> list) {
-        GridLayoutManager gridLayoutManager = RecyclerViewUtil.gridLayoutManager(activity);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        adapter = new AdapterMagazineList(
-                activity,
-                list
-        );
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(scrollListener);
-    }
-
-    private static boolean loading = false;
-    private static RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            if (SystemUtil.connection()) {
-                final GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-                if (!loading && gridLayoutManager.getItemCount() == (gridLayoutManager.findLastVisibleItemPosition() + 1)) {
-                    newConection();
-                    loading = true;
-                }
-
-            }
-        }
-    };
-
-    //=====================================================
-
-    private static void newConection() {
-        connect.getDataFrom(1, true, cursor);
-    }
-
-    static int cursor = 0;
-
-    private static List<MagazineData> databaseMagazine = new ArrayList<>();
-
-    public static void initList(Response<ListMagazine> wsResponse) {
-        refreshLayout.setRefreshing(false);
-
-        List<MagazineData> list = new ArrayList<>();
-
-        int quant = Objects.requireNonNull(wsResponse.body()).getData().getResults().size();
-
-        if (quant > 0) {
-            for (int i = 0; i < quant; i++) {
-                list.add(i, Objects.requireNonNull(wsResponse.body()).getData().getResults().get(i));
-                databaseMagazine.add(i, Objects.requireNonNull(wsResponse.body()).getData().getResults().get(i));
-            }
-
-            adapter.addList(list);
-            cursor = cursor + Objects.requireNonNull(wsResponse.body()).getData().getLimit();
-            loading = false;
-        } else {
-            adapter.addEndView();
-        }
 
     }
 
-    //=====================================================
-
-    static List<Searsh> database = new ArrayList<>();
-    static List<Searsh> databaseTmp = new ArrayList<>();
-    @SuppressLint("StaticFieldLeak")
-    private static ListView listView_busca;
-    private static PopupWindow popupWindow;
-    private static Dialog dialogSearsh;
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        listMagazinesFragment = new ListMagazinesFragment();
+        likeMagazineFragment = new LikeMagazineFragment();
+        adapter.addFragment(listMagazinesFragment, getString(R.string.comix_title));
+        adapter.addFragment(likeMagazineFragment, getString(R.string.like_title));
+        viewPager.setAdapter(adapter);
+    }
 
     public void openSearhDialog() {
 
-        dialogSearsh = new Dialog(MainActivity.this, R.style.DialogFullscreen);
+        dialogSearsh = new Dialog(activity, R.style.DialogFullscreen);
         dialogSearsh.setContentView(R.layout.dialog_searchbar);
         Objects.requireNonNull(dialogSearsh.getWindow()).getAttributes().windowAnimations = R.style.DialogNoAnimation;
 
@@ -225,8 +171,10 @@ public class MainActivity extends BaseActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     final Searsh hmAux = (Searsh) parent.getItemAtPosition(position);
-                    String texto_celula_pesquisa = hmAux.getTextSearsh();
-                    searshBarText.setText(texto_celula_pesquisa);
+                    String textCell = hmAux.getTextSearsh();
+                    searshBarText.setText(textCell);
+                    viewPager.setCurrentItem(0);
+                    searchMagazine.searchMagazine(textCell);
                     dialogSearsh.dismiss();
                 }
             });
@@ -271,14 +219,16 @@ public class MainActivity extends BaseActivity {
                     String textSearsh = editText.getText().toString().trim();
 
                     if (textSearsh.isEmpty() || textSearsh.equals("")) {
-                        LoggerUtils.callToast(activity, "Digite Algo Para Pesquisa");
+                        LoggerUtils.callToast(activity, getString(R.string.search_something));
                     } else {
                         DB_Busca db_busca = new DB_Busca(activity);//conexao
 
                         db_busca.createDataBase();
                         db_busca.insertData(textSearsh);
                         searshBarText.setText(textSearsh);
-                        searshFilterMagazine(textSearsh);
+//                        searshFilterMagazine(textSearsh);
+                        viewPager.setCurrentItem(0);
+                        searchMagazine.searchMagazine(textSearsh);
                         dialogSearsh.dismiss();
                     }
 
@@ -297,7 +247,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String textSearsh = editText.getText().toString().trim();
-                searshFilter(textSearsh);
+                searchFilter(textSearsh);
             }
 
             @Override
@@ -328,15 +278,15 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "O quer pesquisa?");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.text_search_magazine));
         try {
             activity.startActivityForResult(intent, 10);
         } catch (ActivityNotFoundException a) {
-            LoggerUtils.callToast(activity, "Error ao Pesquisar");
+            LoggerUtils.callToast(activity, "Error");
         }
     }
 
-    public void searshFilter(String name) {
+    public void searchFilter(String name) {
         name = name.toLowerCase(Locale.getDefault());
         databaseTmp.clear();
 
@@ -366,23 +316,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    static List<MagazineData> databaseMagazineTmp = new ArrayList<>();
-
-    public void searshFilterMagazine(String name) {
-        name = name.toLowerCase(Locale.getDefault());
-        databaseMagazineTmp.clear();
-
-        if (name.length() == 0) {
-            initRecyclerView(databaseMagazine);
-        } else {
-            for (MagazineData magazine : databaseMagazine) {
-                if (magazine.getTitle().toLowerCase(Locale.getDefault()).contains(name)) {
-                    databaseMagazineTmp.add(magazine);
-                }
-            }
-            initRecyclerView(databaseMagazineTmp);
-        }
-    }
 
     /**
      * Receiving speech input
@@ -402,13 +335,21 @@ public class MainActivity extends BaseActivity {
                     db_busca.createDataBase();
                     db_busca.insertData(result.get(0));
                     searshBarText.setText((result.get(0)));
-                    searshFilterMagazine(result.get(0));
+//                    searshFilterMagazine(result.get(0));
+                    viewPager.setCurrentItem(0);
+                    searchMagazine.searchMagazine(result.get(0));
                     dialogSearsh.dismiss();
                 }
                 break;
             }
-
         }
     }
 
+    public interface LoadData {
+        void load();
+    }
+
+    public interface searchMagazine {
+        void searchMagazine(String textSearsh);
+    }
 }
