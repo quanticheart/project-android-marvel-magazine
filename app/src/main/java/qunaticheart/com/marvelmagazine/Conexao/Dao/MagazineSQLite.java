@@ -124,14 +124,7 @@ public class MagazineSQLite extends Dao {
 
     public List<MagazineData> getListLike() {
         List<MagazineData> dados = new ArrayList<>();
-        List<MagazineData.prices> pricesList = new ArrayList<>();
-        List<MagazineData.dates> datesList = new ArrayList<>();
-        List<MagazineData.urls> urlsList = new ArrayList<>();
-        //
-        MagazineData.thumbnail thumbnail = new MagazineData.thumbnail();
-        MagazineData.prices prices = new MagazineData.prices();
-        MagazineData.dates dates = new MagazineData.dates();
-        MagazineData.urls urls = new MagazineData.urls();
+
         //
         openDataBase();
         //
@@ -144,6 +137,14 @@ public class MagazineSQLite extends Dao {
 
             while (cursor.moveToNext()) {
                 MagazineData magazine = new MagazineData();
+                List<MagazineData.prices> pricesList = new ArrayList<>();
+                List<MagazineData.dates> datesList = new ArrayList<>();
+                List<MagazineData.urls> urlsList = new ArrayList<>();
+                //
+                MagazineData.thumbnail thumbnail = new MagazineData.thumbnail();
+                MagazineData.prices prices = new MagazineData.prices();
+                MagazineData.dates dates = new MagazineData.dates();
+                MagazineData.urls urls = new MagazineData.urls();
 
 //                magazine.setId(cursor.getInt(cursor.getColumnIndex(createDataBase.Constant_Magazine_ID)));
                 magazine.setId(cursor.getInt(cursor.getColumnIndex(createDataBase.Constant_Magazine_ID_Magazine)));

@@ -183,7 +183,6 @@ public class MainMagazineActivity extends BaseActivity {
             relativeLayout_busca.setVisibility(View.VISIBLE);
         }
 
-
         LayoutInflater layoutInflater = (LayoutInflater) activity.getSystemService(LAYOUT_INFLATER_SERVICE);
         assert layoutInflater != null;
         @SuppressLint("InflateParams") final View popupView = layoutInflater.inflate(R.layout.dialog_serachbar_menu, null);

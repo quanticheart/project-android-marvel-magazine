@@ -56,8 +56,14 @@ public class AdapterMagazineList extends RecyclerView.Adapter<RecyclerView.ViewH
      * @param list HMAux's list
      */
     public void addList(List<MagazineData> list) {
+
+//        for (int i = 0; i < list.size(); i++) {
+//            dataBase.add(list.get(i));
+//            notifyItemInserted(dataBase.size() + 1);
+//        }
         dataBase.addAll(list);
         notifyItemInserted(dataBase.size() - 1);
+//        notifyDataSetChanged();
     }
 
     /**

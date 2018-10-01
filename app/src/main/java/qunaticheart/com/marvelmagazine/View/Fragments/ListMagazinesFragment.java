@@ -142,18 +142,17 @@ public class ListMagazinesFragment extends BaseFragment implements MainMagazineA
     public static void initList(Response<ListMagazine> wsResponse) {
         refreshLayout.setRefreshing(false);
 
-        List<MagazineData> list = new ArrayList<>();
+
 
         int quant = Objects.requireNonNull(wsResponse.body()).getData().getResults().size();
 
         if (quant > 0) {
+            List<MagazineData> list = new ArrayList<>();
             for (int i = 0; i < quant; i++) {
-
                 MagazineData magazine = Objects.requireNonNull(wsResponse.body()).getData().getResults().get(i);
-                list.add(i, magazine);
-                databaseMagazine.add(i, magazine);
+                list.add(magazine);
+                databaseMagazine.add(magazine);
                 controller.addMagazine(magazine);
-
             }
 
             adapter.addList(list);
