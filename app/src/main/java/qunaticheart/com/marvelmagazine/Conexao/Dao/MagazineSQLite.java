@@ -252,45 +252,4 @@ public class MagazineSQLite extends Dao {
         closeDataBase();
     }
 
-    public String Funcao_getSQlite(String none_db) {
-
-        openDataBase();
-        //
-        Cursor cursor = null;
-
-        String id = Funcao_FirstID(none_db);
-        String dados = "";
-        //
-        try {
-            String comando = " select * from DB_" + none_db + " where _id = ? ";
-            String[] argumentos = {String.valueOf(id)};
-
-            cursor = db.rawQuery(comando.toLowerCase(), argumentos);
-
-            while (cursor.moveToNext()) {
-                dados = cursor.getString(cursor.getColumnIndex(none_db));
-            }
-
-            cursor.close();
-            cursor = null;
-
-        } catch (Exception e) {
-        }
-        //
-        closeDataBase();
-        //
-        return dados;
-    }
-
-    private String Funcao_FirstID(String nome_db) {
-        String rowId = "";
-        Cursor cursor = db.query("DB_" + nome_db, null, null, null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            rowId = cursor.getString(cursor.getColumnIndex("_id"));
-        }
-
-        return rowId;
-    }
-
 }
