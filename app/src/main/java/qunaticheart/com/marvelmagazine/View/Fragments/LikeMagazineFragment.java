@@ -19,10 +19,11 @@ import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
 import qunaticheart.com.marvelmagazine.Controller.MainController;
 import qunaticheart.com.marvelmagazine.R;
 import qunaticheart.com.marvelmagazine.Utils.Adapter.AdapterMagazineList;
+import qunaticheart.com.marvelmagazine.Utils.DialogUtil;
 import qunaticheart.com.marvelmagazine.Utils.RecyclerViewUtil;
 import qunaticheart.com.marvelmagazine.View.MainMagazineActivity;
 
-public class LikeMagazineFragment extends BaseFragment implements MainMagazineActivity.LoadData {
+public class LikeMagazineFragment extends BaseFragment implements MainMagazineActivity.LoadData, DialogUtil.DialogRemoveLike {
 
     //Database For Magazines
     private static List<MagazineData> databaseMagazine = new ArrayList<>();
@@ -52,6 +53,7 @@ public class LikeMagazineFragment extends BaseFragment implements MainMagazineAc
     private void initVars(View view) {
         activity = getActivity();
         controller = new MainController(activity);
+        DialogUtil.setRemoveLike(this);
         MainMagazineActivity.setLoadData(this);
         recyclerView = view.findViewById(R.id.recycler_view_recycler_view);
         refreshLayout = view.findViewById(R.id.swipe_refresh_layout_recycler_view);
@@ -91,4 +93,8 @@ public class LikeMagazineFragment extends BaseFragment implements MainMagazineAc
         initListLike();
     }
 
+    @Override
+    public void removeLike(int position) {
+        initListLike();
+    }
 }

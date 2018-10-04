@@ -146,7 +146,7 @@ public class MagazineSQLite extends Dao {
                 MagazineData.dates dates = new MagazineData.dates();
                 MagazineData.urls urls = new MagazineData.urls();
 
-//                magazine.setId(cursor.getInt(cursor.getColumnIndex(createDataBase.Constant_Magazine_ID)));
+                // magazine.setId(cursor.getInt(cursor.getColumnIndex(createDataBase.Constant_Magazine_ID)));
                 magazine.setId(cursor.getInt(cursor.getColumnIndex(createDataBase.Constant_Magazine_ID_Magazine)));
                 magazine.setTitle(cursor.getString(cursor.getColumnIndex(createDataBase.Constant_Magazine_Title)));
                 magazine.setDescription(cursor.getString(cursor.getColumnIndex(createDataBase.Constant_Magazine_Description)));

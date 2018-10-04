@@ -254,7 +254,7 @@ public class AdapterMagazineList extends RecyclerView.Adapter<RecyclerView.ViewH
             Intent magazine = new Intent(activity, MagazineActivity.class);
             magazine.putExtra(getMagazineKey(), magazineData);
 
-            ActivityUtil.callActivity(activity , magazine , false);
+            ActivityUtil.callActivity(activity, magazine, false);
 
         }
     };
@@ -264,7 +264,7 @@ public class AdapterMagazineList extends RecyclerView.Adapter<RecyclerView.ViewH
         public boolean onLongClick(View v) {
             viewPosition = (int) v.getTag();
             MagazineData magazineData = dataBase.get(viewPosition);
-            DialogUtil.showDetails(activity, magazineData);
+            DialogUtil.showDetails(activity, magazineData, viewPosition);
             return true;
         }
     };

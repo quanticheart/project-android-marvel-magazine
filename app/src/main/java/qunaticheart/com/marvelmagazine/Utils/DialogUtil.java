@@ -21,7 +21,9 @@ import static qunaticheart.com.marvelmagazine.Utils.GlideUtil.initGlide;
 
 public class DialogUtil {
 
-    public static void showDetails(final Activity activity, final MagazineData magazine) {
+    private static DialogRemoveLike removeLike;
+
+    public static void showDetails(final Activity activity, final MagazineData magazine, final int position) {
 
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -52,12 +54,25 @@ public class DialogUtil {
                 magazine.setLike(ViewUtil.updateMagazineLikeStatus(activity, magazine));
                 ViewUtil.statusLikeView(imageViewLike, magazine);
                 new MainController(activity).setLike(magazine);
+
+                if (magazine.getLike().equals("0")) {
+                    removeLike.removeLike(position);
+                    dialog.dismiss();
+                }
             }
         });
 
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true);
         dialog.show();
+    }
+
+    public static void setRemoveLike(DialogRemoveLike removeLike) {
+        DialogUtil.removeLike = removeLike;
+    }
+
+    public interface DialogRemoveLike {
+        void removeLike(int position);
     }
 
 

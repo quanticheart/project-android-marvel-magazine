@@ -141,9 +141,6 @@ public class ListMagazinesFragment extends BaseFragment implements MainMagazineA
 
     public static void initList(Response<ListMagazine> wsResponse) {
         refreshLayout.setRefreshing(false);
-
-
-
         int quant = Objects.requireNonNull(wsResponse.body()).getData().getResults().size();
 
         if (quant > 0) {
