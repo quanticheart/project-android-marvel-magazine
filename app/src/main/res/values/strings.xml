@@ -17,4 +17,5 @@
     <string name="search_something">Enter Something For Search</string>
     <string name="text_search_magazine">search for a magazine</string>
     <string name="msg_no_connection">No Conection</string>
+    <string name="msg_error_magazine_data">Error on Load Magazine Data</string>
 </resources>

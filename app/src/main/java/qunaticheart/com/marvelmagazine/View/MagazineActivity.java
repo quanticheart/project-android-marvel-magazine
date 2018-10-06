@@ -1,72 +1,88 @@
 package qunaticheart.com.marvelmagazine.View;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.Objects;
 
 import qunaticheart.com.marvelmagazine.Base.BaseActivity;
 import qunaticheart.com.marvelmagazine.Base.WebViewActivity;
-import qunaticheart.com.marvelmagazine.BroadCast.SystemUtil;
-import qunaticheart.com.marvelmagazine.Conexao.Constants.ConstantsConnect;
 import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
 import qunaticheart.com.marvelmagazine.Controller.MainController;
 import qunaticheart.com.marvelmagazine.R;
 import qunaticheart.com.marvelmagazine.Utils.ActivityUtil;
 import qunaticheart.com.marvelmagazine.Utils.Adapter.AdapterMagazineList;
+import qunaticheart.com.marvelmagazine.Utils.LoggerUtils;
 import qunaticheart.com.marvelmagazine.Utils.ViewUtil;
 
 import static qunaticheart.com.marvelmagazine.Utils.GlideUtil.initGlide;
-import static qunaticheart.com.marvelmagazine.Utils.LoggerUtils.LogE;
-import static qunaticheart.com.marvelmagazine.Utils.LoggerUtils.LogW;
 
 public class MagazineActivity extends BaseActivity {
 
+    //init
     private BottomSheetBehavior bottomSheetBehavior;
+
+    // Magazine Data
     private MagazineData magazine;
 
-    private ImageView imgMagazine;
+    //Magazine Views
+    private ImageView MagazineCover;
+    private TextView MagazineNumber;
+    private LinearLayout MagazineDetailsBSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_magazine);
 
-        Intent i = getIntent();
-        magazine = (MagazineData) i.getSerializableExtra(AdapterMagazineList.getMagazineKey());
+        magazine = verifyIntentMagazineData();
 
-        initComponent();
+        initVars();
+        initActions();
 
     }
 
-    @SuppressLint("SetTextI18n")
-    private void initComponent() {
-        LinearLayout llBottomSheet = findViewById(R.id.bottom_sheet);
 
-        imgMagazine = findViewById(R.id.magazineCover);
+    private void initVars() {
+        MagazineCover = findViewById(R.id.magazineCover);
+        MagazineNumber = findViewById(R.id.numberMagazineActivity);
+        MagazineDetailsBSheet = findViewById(R.id.bottom_sheet);
+    }
 
-        initGlide(activity, ViewUtil.getFullImageCover(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), imgMagazine);
+    private void initActions() {
 
-        TextView number = findViewById(R.id.numberMagazineActivity);
-        number.setText(ViewUtil.getNumberFormated(magazine.getIssueNumber()));
+        //Cover
+        initGlide(activity, ViewUtil.getFullImageCover(magazine.getThumbnail().getPath(),
+                magazine.getThumbnail().getExtension()), MagazineCover);
 
-        ((TextView) llBottomSheet.findViewById(R.id.magazineName)).setText(magazine.getTitle());
+        //Number
+        MagazineNumber.setText(ViewUtil.getNumberFormated(magazine.getIssueNumber()));
 
+        //Details
+        BSheeatDetails();
+    }
+
+    private void BSheeatDetails() {
+
+        //Title
+        ((TextView) MagazineDetailsBSheet.findViewById(R.id.magazineName)).setText(magazine.getTitle());
+
+        //Data Posted
         if (magazine.getDates().size() > 0) {
-            ((TextView) llBottomSheet.findViewById(R.id.dataPosted)).setText(ViewUtil.timestampToStringFormated(magazine.getDates()));
+            ((TextView) MagazineDetailsBSheet.findViewById(R.id.dataPosted)).setText(ViewUtil.timestampToStringFormated(magazine.getDates()));
         } else {
-            ((TextView) llBottomSheet.findViewById(R.id.dataPosted)).setVisibility(View.GONE);
+            MagazineDetailsBSheet.findViewById(R.id.dataPosted).setVisibility(View.GONE);
         }
 
+        //Web Details
         if (magazine.getUrls().size() > 0) {
-            ((TextView) llBottomSheet.findViewById(R.id.moreDetailsInWeb)).setOnClickListener(new View.OnClickListener() {
+            MagazineDetailsBSheet.findViewById(R.id.moreDetailsInWeb).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -77,15 +93,22 @@ public class MagazineActivity extends BaseActivity {
                 }
             });
         } else {
-            ((TextView) llBottomSheet.findViewById(R.id.moreDetailsInWeb)).setVisibility(View.GONE);
+            MagazineDetailsBSheet.findViewById(R.id.moreDetailsInWeb).setVisibility(View.GONE);
         }
 
-        ((TextView) llBottomSheet.findViewById(R.id.formatMagazine)).setText(magazine.getFormat());
-        ((TextView) llBottomSheet.findViewById(R.id.numberPagesMagazine)).setText(ViewUtil.pageCountFormate(magazine.getPageCount()));
-        ((TextView) llBottomSheet.findViewById(R.id.textMagazine)).setText(magazine.getDescription());
+        //Format Magazine
+        ((TextView) MagazineDetailsBSheet.findViewById(R.id.formatMagazine)).setText(magazine.getFormat());
 
-        final ImageView imageViewLike = llBottomSheet.findViewById(R.id.btn_like);
+        //Number Pages
+        ((TextView) MagazineDetailsBSheet.findViewById(R.id.numberPagesMagazine)).setText(ViewUtil.pageCountFormate(magazine.getPageCount()));
+
+        //Description
+        ((TextView) MagazineDetailsBSheet.findViewById(R.id.textMagazine)).setText(magazine.getDescription());
+
+        //Like Button
+        final ImageView imageViewLike = MagazineDetailsBSheet.findViewById(R.id.btn_like);
         ViewUtil.statusLikeView(imageViewLike, magazine);
+
         imageViewLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +118,8 @@ public class MagazineActivity extends BaseActivity {
             }
         });
 
-        bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+        //BottomSheet Constructor
+        bottomSheetBehavior = BottomSheetBehavior.from(MagazineDetailsBSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -105,18 +129,13 @@ public class MagazineActivity extends BaseActivity {
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-                float i = 0.3f;
-
-                if (slideOffset < 0.7) {
-                    i = (1 - (slideOffset));
-                }
-
-                imgMagazine.setAlpha(i);
+                MagazineCover.setAlpha(getAlphaStatus(slideOffset));
             }
         });
 
-        number.setOnClickListener(new View.OnClickListener() {
+
+        //Magazine Number Click
+        MagazineNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -124,4 +143,32 @@ public class MagazineActivity extends BaseActivity {
         });
     }
 
+    //==============================================================================================
+    //
+    // Utils
+    //
+    //==============================================================================================
+
+    private float getAlphaStatus(float slideOffset) {
+        float i = 0.3f;
+        if (slideOffset < 0.7) {
+            i = 1 - slideOffset;
+        }
+        return i;
+    }
+
+    private MagazineData verifyIntentMagazineData() {
+        Intent i = getIntent();
+        if (!Objects.requireNonNull(i.getExtras()).isEmpty()) {
+            return (MagazineData) i.getSerializableExtra(AdapterMagazineList.getMagazineKey());
+        } else {
+            finishActivityOnError();
+            return new MagazineData();
+        }
+    }
+
+    private void finishActivityOnError() {
+        LoggerUtils.callToast(activity, getString(R.string.msg_error_magazine_data));
+        finish();
+    }
 }

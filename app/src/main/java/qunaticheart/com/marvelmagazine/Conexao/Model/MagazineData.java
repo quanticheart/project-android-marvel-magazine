@@ -1,6 +1,7 @@
 package qunaticheart.com.marvelmagazine.Conexao.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MagazineData implements Serializable {
@@ -25,9 +26,50 @@ public class MagazineData implements Serializable {
     private List<dates> dates;
     private List<urls> urls;
 
-     public MagazineData() {
-       like = "0";
+    public MagazineData() {
+        this.id = getIntError();
+        this.digitalId = getIntError();
+        this.title = getStringError();
+        this.issueNumber = getIntError();
+        this.variantDescription = getStringError();
+        this.description = getStringError();
+        this.modified = getStringError();
+        this.isbn = getStringError();
+        this.like = "0";
+        this.upc = getStringError();
+        this.diamondCode = getStringError();
+        this.ean = getStringError();
+        this.issn = getStringError();
+        this.format = getStringError();
+        this.pageCount = getIntError();
+        this.thumbnail = null;
+        this.prices = new ArrayList<>();
+        this.dates = new ArrayList<>();
+        this.urls = new ArrayList<>();
     }
+
+    public MagazineData(Integer id, Integer digitalId, String title, Integer issueNumber, String variantDescription, String description, String modified, String isbn, String like, String upc, String diamondCode, String ean, String issn, String format, Integer pageCount, MagazineData.thumbnail thumbnail, List<MagazineData.prices> prices, List<MagazineData.dates> dates, List<MagazineData.urls> urls) {
+        this.id = id;
+        this.digitalId = digitalId;
+        this.title = title;
+        this.issueNumber = issueNumber;
+        this.variantDescription = variantDescription;
+        this.description = description;
+        this.modified = modified;
+        this.isbn = isbn;
+        this.like = like;
+        this.upc = upc;
+        this.diamondCode = diamondCode;
+        this.ean = ean;
+        this.issn = issn;
+        this.format = format;
+        this.pageCount = pageCount;
+        this.thumbnail = thumbnail;
+        this.prices = prices;
+        this.dates = dates;
+        this.urls = urls;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String getLike() {
@@ -183,7 +225,6 @@ public class MagazineData implements Serializable {
     }
 
 
-
     //===========================================================================
 
     public static class thumbnail implements Serializable {
@@ -277,5 +318,16 @@ public class MagazineData implements Serializable {
         public void setDate(String date) {
             this.date = date;
         }
+    }
+
+    //utils
+    //==============================================================================================
+
+    private int getIntError() {
+        return -99;
+    }
+
+    private String getStringError() {
+        return "";
     }
 }
