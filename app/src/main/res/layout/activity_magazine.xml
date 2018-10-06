@@ -21,10 +21,8 @@
         android:gravity="center"
         android:textColor="@color/Color_Palet_Flat_CLOUDS"
         android:tint="@android:color/white"
-        app:fabSize="normal"
         app:layout_anchor="@id/bottom_sheet"
-        app:layout_anchorGravity="top|end"
-        app:rippleColor="@android:color/white" />
+        app:layout_anchorGravity="top|end" />
 
 
 </android.support.design.widget.CoordinatorLayout>
