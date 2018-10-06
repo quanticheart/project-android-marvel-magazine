@@ -66,6 +66,11 @@ public class ViewUtil {
         }
     }
 
+    public static String getMagazineTitleWithoutNumber(String format) {
+        String[] title = format.split("#");
+        return title[0];
+    }
+
     //==============================================================================================
     //
     // Like Button ImageView Utils
@@ -125,7 +130,7 @@ public class ViewUtil {
      * @param extencion extencion image
      * @return image url Square
      */
-    public static String getFantasticImageSquare(String url, String extencion) {
+    static String getFantasticImageSquare(String url, String extencion) {
         return url + "/" + getSquareFantastic() + "." + extencion;
     }
 

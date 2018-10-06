@@ -18,6 +18,7 @@ import qunaticheart.com.marvelmagazine.View.MagazineActivity;
 
 import static qunaticheart.com.marvelmagazine.Utils.Adapter.AdapterMagazineList.getMagazineKey;
 import static qunaticheart.com.marvelmagazine.Utils.GlideUtil.initGlide;
+import static qunaticheart.com.marvelmagazine.Utils.ViewUtil.getMagazineTitleWithoutNumber;
 
 public class DialogUtil {
 
@@ -31,7 +32,7 @@ public class DialogUtil {
 
         initGlide(activity, ViewUtil.getFantasticImageSquare(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), ((ImageView) dialog.findViewById(R.id.magazineCover)));
 
-        ((TextView) dialog.findViewById(R.id.magazineName)).setText(magazine.getTitle());
+        ((TextView) dialog.findViewById(R.id.magazineName)).setText(getMagazineTitleWithoutNumber(magazine.getTitle()));
         ((TextView) dialog.findViewById(R.id.numberMagazine)).setText(ViewUtil.getNumberFormated(magazine.getTitle(), magazine.getIssueNumber()));
         ((TextView) dialog.findViewById(R.id.numberPrice)).setText(ViewUtil.moneyFormate(magazine.getPrices().get(0).getPrice()));
 

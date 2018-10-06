@@ -52,7 +52,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:paddingTop="10dp"
+                    android:padding="10dp"
                     android:id="@+id/magazineName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

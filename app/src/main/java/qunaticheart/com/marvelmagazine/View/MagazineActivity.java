@@ -23,6 +23,7 @@ import qunaticheart.com.marvelmagazine.Utils.ViewUtil;
 
 import static qunaticheart.com.marvelmagazine.Utils.GlideUtil.initGlide;
 import static qunaticheart.com.marvelmagazine.Utils.ViewUtil.getMagazineFormat;
+import static qunaticheart.com.marvelmagazine.Utils.ViewUtil.getMagazineTitleWithoutNumber;
 
 public class MagazineActivity extends BaseActivity {
 
@@ -72,7 +73,7 @@ public class MagazineActivity extends BaseActivity {
     private void BSheeatDetails() {
 
         //Title
-        ((TextView) MagazineDetailsBSheet.findViewById(R.id.magazineName)).setText(magazine.getTitle());
+        ((TextView) MagazineDetailsBSheet.findViewById(R.id.magazineName)).setText(getMagazineTitleWithoutNumber(magazine.getTitle()));
 
         //Data Posted
         if (magazine.getDates().size() > 0) {
