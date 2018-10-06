@@ -82,6 +82,10 @@ public class MainMagazineActivity extends BaseActivity {
 
     }
 
+    public static boolean getStatusNetwork(){
+        return connected;
+    }
+
     private void initVars() {
 
         llSearsh = findViewById(R.id.ll_include_searchbar);
@@ -349,5 +353,15 @@ public class MainMagazineActivity extends BaseActivity {
 
     public interface searchMagazine {
         void searchMagazineList(String textSearsh);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 }

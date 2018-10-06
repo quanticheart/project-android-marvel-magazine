@@ -17,7 +17,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 import qunaticheart.com.marvelmagazine.Base.BaseFragment;
-import qunaticheart.com.marvelmagazine.BroadCast.SystemUtil;
 import qunaticheart.com.marvelmagazine.Conexao.Connect;
 import qunaticheart.com.marvelmagazine.Conexao.Model.ListMagazine;
 import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
@@ -27,6 +26,8 @@ import qunaticheart.com.marvelmagazine.Utils.Adapter.AdapterMagazineList;
 import qunaticheart.com.marvelmagazine.Utils.RecyclerViewUtil;
 import qunaticheart.com.marvelmagazine.View.MainMagazineActivity;
 import retrofit2.Response;
+
+import static qunaticheart.com.marvelmagazine.View.MainMagazineActivity.getStatusNetwork;
 
 public class ListMagazinesFragment extends BaseFragment implements MainMagazineActivity.searchMagazine {
 
@@ -86,7 +87,7 @@ public class ListMagazinesFragment extends BaseFragment implements MainMagazineA
             @Override
             public void onRefresh() {
 
-                if (SystemUtil.connection()) {
+                if (getStatusNetwork()) {
                     controller.deleteTableMagazine();
                     databaseMagazine.clear();
                     cursor = 0;
@@ -122,7 +123,7 @@ public class ListMagazinesFragment extends BaseFragment implements MainMagazineA
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            if (SystemUtil.connection()) {
+            if (getStatusNetwork()) {
                 final GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
                 if (!loading && gridLayoutManager.getItemCount() == (gridLayoutManager.findLastVisibleItemPosition() + 1)) {
                     newConection();

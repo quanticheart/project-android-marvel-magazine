@@ -14,16 +14,18 @@ import java.util.Objects;
 import qunaticheart.com.marvelmagazine.BroadCast.MyReceiver;
 import qunaticheart.com.marvelmagazine.BroadCast.SystemUtil;
 import qunaticheart.com.marvelmagazine.Helpers.SplashHelper;
+import qunaticheart.com.marvelmagazine.R;
+import qunaticheart.com.marvelmagazine.Utils.LoggerUtils;
 
 public abstract class BaseActivity extends AppCompatActivity implements SystemUtil.ConnectionVerify {
 
     //init
     @SuppressLint("StaticFieldLeak")
     public static Activity activity;
-    private static Snackbar snackbar = null;
+    private Snackbar snackbar = null;
 
     //ConnectionVerify Verifie
-    public boolean connected = false;
+    public static boolean connected = false;
     private MyReceiver connectionReceiver;
 
     @Override
@@ -32,12 +34,11 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
 
         initVars();
         initActions();
-        //
-        connectionReceiver();
 
     }
 
     private void initVars() {
+        connected = false;
         activity = BaseActivity.this;
         new SplashHelper(activity);
     }
@@ -52,15 +53,15 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
     //
     //==============================================================================================
 
-    private void connectionReceiver() {
+    private void connectionReceiverRegister() {
 
-        new SystemUtil(activity);
-        SystemUtil.setConnectionVerify(this);
+            new SystemUtil(activity);
+            SystemUtil.setConnectionVerify(this);
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        connectionReceiver = new MyReceiver();
-        registerReceiver(connectionReceiver, filter);
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            connectionReceiver = new MyReceiver();
+            registerReceiver(connectionReceiver, filter);
 
     }
 
@@ -70,22 +71,19 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
     //
     //==============================================================================================
 
-
     @Override
-    public void ConnectionFail() {
-        connected = false;
-        if (snackbar == null) {
-            snackbar = Snackbar.make(Objects.requireNonNull(activity.getCurrentFocus()), "No Conection", Snackbar.LENGTH_INDEFINITE);
-            snackbar.show();
+    public void ConnectionOK() {
+        connected = true;
+        if (!verifySnackbar()) {
+            clearSnackbar();
         }
     }
 
     @Override
-    public void ConnectionOK() {
-        connected = true;
-        if (snackbar != null) {
-            snackbar.dismiss();
-            snackbar = null;
+    public void ConnectionFail() {
+        connected = false;
+        if (verifySnackbar()) {
+            showSnackbar();
         }
     }
 
@@ -95,28 +93,42 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
     //
     //==============================================================================================
 
+    private void showSnackbar() {
+        snackbar = Snackbar.make(Objects.requireNonNull(activity.getCurrentFocus()), R.string.msg_no_connection, Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
+    }
 
+    private void clearSnackbar() {
+        snackbar.dismiss();
+        snackbar = null;
+    }
+
+    private boolean verifySnackbar() {
+        return snackbar == null;
+    }
 
     //==============================================================================================
     //
-    // @Override Life Cycle
+    // @Override Life Cycle Activity
     //
     //==============================================================================================
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(connectionReceiver);
+        if (connectionReceiver != null) {
+            unregisterReceiver(connectionReceiver);
+        }
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        connectionReceiver();
     }
 
     @Override
     protected void onResume() {
+        connectionReceiverRegister();
         super.onResume();
     }
 
@@ -130,7 +142,4 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
         super.onDestroy();
     }
 
-//    private boolean verifieSnackbar(){
-//        return snackbar == null? true : false;
-//    }
 }
