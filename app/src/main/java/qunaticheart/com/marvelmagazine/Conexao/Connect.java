@@ -42,7 +42,7 @@ public class Connect {
     }
 
     /**
-     * @param connectionID Connection Enum
+     * @param connectionID ConnectionVerify Enum
      * @param showLoading Show Loading?
      */
     public void getDataFrom(Connection connectionID, Boolean showLoading, int offset) {

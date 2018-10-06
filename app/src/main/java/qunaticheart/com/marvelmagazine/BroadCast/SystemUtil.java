@@ -1,57 +1,56 @@
 package qunaticheart.com.marvelmagazine.BroadCast;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.design.widget.Snackbar;
-
-import java.util.Objects;
 
 public class SystemUtil {
-    private static Snackbar snackbar;
+
+    @SuppressLint("StaticFieldLeak")
     private static Activity activity;
 
-    private static ShowMsg showMsg;
+    //==============================================================================================
+    //
+    // Constructor
+    //
+    //==============================================================================================
 
     public SystemUtil(Activity mActivity) {
         activity = mActivity;
     }
 
-    public static boolean connection() {
+    //==============================================================================================
+    //
+    // connection
+    //
+    //==============================================================================================
+
+    public static void connection() {
 
         ConnectivityManager manager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert manager != null;
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-//            if (snackbar != null) {
-//                snackbar.dismiss();
-//                snackbar = null;
-//            }
-            showMsg.hideMsg();
-            return true;
+            connectionVerify.ConnectionOK();
         } else {
-            try {
-//                if (snackbar == null) {
-//                    snackbar = Snackbar.make(Objects.requireNonNull(activity.), "No Conection", Snackbar.LENGTH_INDEFINITE);
-//                    snackbar.show();
-//                }
-                showMsg.showMsg();
-            } catch (Exception e) {
-            }
-
-            return false;
+            connectionVerify.ConnectionFail();
         }
     }
 
-    public static void setShowMsg(ShowMsg showMsg) {
-        SystemUtil.showMsg = showMsg;
+    // ** Interface Connection
+    private static ConnectionVerify connectionVerify;
+
+    public static void setConnectionVerify(ConnectionVerify connectionVerify) {
+        SystemUtil.connectionVerify = connectionVerify;
     }
 
-    public interface ShowMsg {
-         void showMsg();
-         void hideMsg();
+    public interface ConnectionVerify {
+        void ConnectionOK();
+
+        void ConnectionFail();
     }
 
 }
