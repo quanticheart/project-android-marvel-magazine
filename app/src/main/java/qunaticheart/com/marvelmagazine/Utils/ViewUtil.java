@@ -58,6 +58,14 @@ public class ViewUtil {
         }
     }
 
+    public static String getMagazineFormat(String format) {
+        if (format.equals(format.toUpperCase())) {
+            return "Poster";
+        } else {
+            return format;
+        }
+    }
+
     //==============================================================================================
     //
     // Like Button ImageView Utils

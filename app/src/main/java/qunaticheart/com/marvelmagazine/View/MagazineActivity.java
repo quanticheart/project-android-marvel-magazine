@@ -22,6 +22,7 @@ import qunaticheart.com.marvelmagazine.Utils.LoggerUtils;
 import qunaticheart.com.marvelmagazine.Utils.ViewUtil;
 
 import static qunaticheart.com.marvelmagazine.Utils.GlideUtil.initGlide;
+import static qunaticheart.com.marvelmagazine.Utils.ViewUtil.getMagazineFormat;
 
 public class MagazineActivity extends BaseActivity {
 
@@ -97,7 +98,7 @@ public class MagazineActivity extends BaseActivity {
         }
 
         //Format Magazine
-        ((TextView) MagazineDetailsBSheet.findViewById(R.id.formatMagazine)).setText(magazine.getFormat());
+        ((TextView) MagazineDetailsBSheet.findViewById(R.id.formatMagazine)).setText(getMagazineFormat(magazine.getFormat()));
 
         //Number Pages
         ((TextView) MagazineDetailsBSheet.findViewById(R.id.numberPagesMagazine)).setText(ViewUtil.pageCountFormate(magazine.getPageCount()));
