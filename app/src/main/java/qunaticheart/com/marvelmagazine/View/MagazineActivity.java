@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import qunaticheart.com.marvelmagazine.Base.BaseActivity;
 import qunaticheart.com.marvelmagazine.Base.WebViewActivity;
+import qunaticheart.com.marvelmagazine.BroadCast.SystemUtil;
 import qunaticheart.com.marvelmagazine.Conexao.Constants.ConstantsConnect;
 import qunaticheart.com.marvelmagazine.Conexao.Model.MagazineData;
 import qunaticheart.com.marvelmagazine.Controller.MainController;

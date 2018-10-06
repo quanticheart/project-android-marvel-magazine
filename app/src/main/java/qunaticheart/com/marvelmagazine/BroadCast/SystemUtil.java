@@ -27,7 +27,7 @@ public class SystemUtil {
     //
     //==============================================================================================
 
-    public static void connection() {
+    static void connection() {
 
         ConnectivityManager manager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert manager != null;

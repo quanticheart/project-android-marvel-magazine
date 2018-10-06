@@ -15,18 +15,19 @@ import qunaticheart.com.marvelmagazine.BroadCast.MyReceiver;
 import qunaticheart.com.marvelmagazine.BroadCast.SystemUtil;
 import qunaticheart.com.marvelmagazine.Helpers.SplashHelper;
 import qunaticheart.com.marvelmagazine.R;
-import qunaticheart.com.marvelmagazine.Utils.LoggerUtils;
 
 public abstract class BaseActivity extends AppCompatActivity implements SystemUtil.ConnectionVerify {
 
     //init
     @SuppressLint("StaticFieldLeak")
     public static Activity activity;
-    private Snackbar snackbar = null;
 
     //ConnectionVerify Verifie
-    public static boolean connected = false;
+    private Snackbar snackbar = null;
     private MyReceiver connectionReceiver;
+
+    public static boolean connected = false;
+    public static boolean showSnackbar = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +40,8 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
 
     private void initVars() {
         connected = false;
+        showSnackbar = true;
+        //
         activity = BaseActivity.this;
         new SplashHelper(activity);
     }
@@ -55,13 +58,13 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
 
     private void connectionReceiverRegister() {
 
-            new SystemUtil(activity);
-            SystemUtil.setConnectionVerify(this);
+        new SystemUtil(activity);
+        SystemUtil.setConnectionVerify(this);
 
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            connectionReceiver = new MyReceiver();
-            registerReceiver(connectionReceiver, filter);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        connectionReceiver = new MyReceiver();
+        registerReceiver(connectionReceiver, filter);
 
     }
 
@@ -82,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
     @Override
     public void ConnectionFail() {
         connected = false;
-        if (verifySnackbar()) {
+        if (verifySnackbar() && showSnackbar) {
             showSnackbar();
         }
     }
@@ -105,6 +108,10 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
 
     private boolean verifySnackbar() {
         return snackbar == null;
+    }
+
+    public void dontShowSnackbarConnection() {
+        showSnackbar = false;
     }
 
     //==============================================================================================

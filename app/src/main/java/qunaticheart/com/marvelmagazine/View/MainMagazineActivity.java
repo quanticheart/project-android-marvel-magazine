@@ -220,7 +220,7 @@ public class MainMagazineActivity extends BaseActivity {
 
                     String textSearsh = editText.getText().toString().trim();
 
-                    if (textSearsh.isEmpty() || textSearsh.equals("")) {
+                    if (textSearsh.isEmpty()) {
                         LoggerUtils.callToast(activity, getString(R.string.search_something));
                     } else {
                         DB_Busca db_busca = new DB_Busca(activity);//conexao
@@ -355,13 +355,4 @@ public class MainMagazineActivity extends BaseActivity {
         void searchMagazineList(String textSearsh);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 }
