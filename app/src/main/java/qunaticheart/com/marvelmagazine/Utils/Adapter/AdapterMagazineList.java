@@ -239,7 +239,7 @@ public class AdapterMagazineList extends RecyclerView.Adapter<RecyclerView.ViewH
 
         initGlide(activity, ViewUtil.getFantasticImageCover(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), viewHolder.imageView);
 
-        viewHolder.numberMagazine.setText(ViewUtil.getNumberFormated(magazine.getIssueNumber()));
+        viewHolder.numberMagazine.setText(ViewUtil.getNumberFormated(magazine.getTitle(), magazine.getIssueNumber()));
         viewHolder.custMagazine.setText(ViewUtil.moneyFormate(magazine.getPrices().get(0).getPrice()));
 
     }

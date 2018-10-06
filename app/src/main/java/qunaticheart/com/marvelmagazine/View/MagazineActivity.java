@@ -62,7 +62,7 @@ public class MagazineActivity extends BaseActivity {
                 magazine.getThumbnail().getExtension()), MagazineCover);
 
         //Number
-        MagazineNumber.setText(ViewUtil.getNumberFormated(magazine.getIssueNumber()));
+        MagazineNumber.setText(ViewUtil.getNumberFormated(magazine.getTitle(), magazine.getIssueNumber()));
 
         //Details
         BSheeatDetails();

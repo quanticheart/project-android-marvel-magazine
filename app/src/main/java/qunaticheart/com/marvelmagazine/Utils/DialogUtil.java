@@ -32,7 +32,7 @@ public class DialogUtil {
         initGlide(activity, ViewUtil.getFantasticImageSquare(magazine.getThumbnail().getPath(), magazine.getThumbnail().getExtension()), ((ImageView) dialog.findViewById(R.id.magazineCover)));
 
         ((TextView) dialog.findViewById(R.id.magazineName)).setText(magazine.getTitle());
-        ((TextView) dialog.findViewById(R.id.numberMagazine)).setText(ViewUtil.getNumberFormated(magazine.getIssueNumber()));
+        ((TextView) dialog.findViewById(R.id.numberMagazine)).setText(ViewUtil.getNumberFormated(magazine.getTitle(), magazine.getIssueNumber()));
         ((TextView) dialog.findViewById(R.id.numberPrice)).setText(ViewUtil.moneyFormate(magazine.getPrices().get(0).getPrice()));
 
         dialog.findViewById(R.id.btnMoreDetails).setOnClickListener(new View.OnClickListener() {

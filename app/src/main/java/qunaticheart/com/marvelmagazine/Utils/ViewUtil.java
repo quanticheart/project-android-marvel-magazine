@@ -3,7 +3,6 @@ package qunaticheart.com.marvelmagazine.Utils;
 import android.app.Activity;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -13,28 +12,15 @@ import qunaticheart.com.marvelmagazine.R;
 
 public class ViewUtil {
 
-    /**
-     * @param btn_item
-     * @param fav
-     */
-    private static void statusLike(ImageView btn_item, int fav) {
-        AlphaAnimation alphaAnimationShowIcon = new AlphaAnimation(0.2f, 1.0f);
-        alphaAnimationShowIcon.setDuration(500);
-
-        if (fav == 0) {
-            btn_item.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-            btn_item.startAnimation(alphaAnimationShowIcon);
-
-        } else {
-            btn_item.setImageResource(R.drawable.ic_favorite_black_24dp);
-            btn_item.startAnimation(alphaAnimationShowIcon);
-
-        }
-    }
+    //==============================================================================================
+    //
+    // String Utils
+    //
+    //==============================================================================================
 
     /**
-     * @param timestamp
-     * @return
+     * @param timestamp to format
+     * @return return data
      */
     public static String timestampToStringFormated(List<MagazineData.dates> timestamp) {
         String date[] = timestamp.get(0).getDate().split("T");
@@ -42,20 +28,71 @@ public class ViewUtil {
     }
 
     /**
-     * @param numero
-     * @return
+     * @param number to format
+     * @return formated
      */
-    public static String moneyFormate(float numero) {
-        return NumberFormat.getCurrencyInstance().format(numero);
+    public static String moneyFormate(float number) {
+        return NumberFormat.getCurrencyInstance().format(number);
     }
 
     /**
-     * @param numero
-     * @return
+     * @param number to format
+     * @return formated
      */
-    public static String pageCountFormate(int numero) {
-        return numero + " Pages";
+    public static String pageCountFormate(int number) {
+        if (number <= 0) {
+            return "";
+        } else if (number == 1) {
+            return number + " Page";
+        } else {
+            return number + " Pages";
+        }
     }
+
+
+    public static String getNumberFormated(String title, Integer number) {
+        if (title.toLowerCase().contains("poster")) {
+            return "Poster";
+        } else {
+            return "#" + number;
+        }
+    }
+
+    //==============================================================================================
+    //
+    // Like Button ImageView Utils
+    //
+    //==============================================================================================
+
+    public static void statusLikeView(ImageView imageView, MagazineData magazine) {
+
+        AlphaAnimation alphaAnimationShowIcon = new AlphaAnimation(0.2f, 1.0f);
+        alphaAnimationShowIcon.setDuration(500);
+
+        if (magazine.getLike().equals("0")) {
+            imageView.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            imageView.startAnimation(alphaAnimationShowIcon);
+        } else {
+            imageView.setImageResource(R.drawable.ic_favorite_black_24dp);
+            imageView.startAnimation(alphaAnimationShowIcon);
+        }
+    }
+
+    public static String updateMagazineLikeStatus(Activity activity, MagazineData magazine) {
+        if (magazine.getLike().equals("0")) {
+            LoggerUtils.showMsg(activity, activity.getString(R.string.msg_liked));
+            return "1";
+        } else {
+            LoggerUtils.showMsg(activity, activity.getString(R.string.msg_desliked));
+            return "0";
+        }
+    }
+
+    //==============================================================================================
+    //
+    // Image Utils
+    //
+    //==============================================================================================
 
     /**
      * @param url       url for connection
@@ -82,34 +119,6 @@ public class ViewUtil {
      */
     public static String getFantasticImageSquare(String url, String extencion) {
         return url + "/" + getSquareFantastic() + "." + extencion;
-    }
-
-    public static String getNumberFormated(Integer number) {
-        return "#" + number;
-    }
-
-    public static void statusLikeView(ImageView imageView, MagazineData magazine) {
-
-        AlphaAnimation alphaAnimationShowIcon = new AlphaAnimation(0.2f, 1.0f);
-        alphaAnimationShowIcon.setDuration(500);
-
-        if (magazine.getLike().equals("0")) {
-            imageView.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-            imageView.startAnimation(alphaAnimationShowIcon);
-        } else {
-            imageView.setImageResource(R.drawable.ic_favorite_black_24dp);
-            imageView.startAnimation(alphaAnimationShowIcon);
-        }
-    }
-
-    public static String updateMagazineLikeStatus(Activity activity, MagazineData magazine) {
-        if (magazine.getLike().equals("0")) {
-            LoggerUtils.showMsg(activity, activity.getString(R.string.msg_liked));
-            return "1";
-        } else {
-            LoggerUtils.showMsg(activity, activity.getString(R.string.msg_desliked));
-            return "0";
-        }
     }
 
 
