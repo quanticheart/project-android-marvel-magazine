@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,6 +48,7 @@ public class MagazineActivity extends BaseActivity {
 
         initVars();
         initActions();
+        dontShowSnackbarConnection();
 
     }
 
@@ -105,7 +107,7 @@ public class MagazineActivity extends BaseActivity {
         ((TextView) MagazineDetailsBSheet.findViewById(R.id.numberPagesMagazine)).setText(ViewUtil.pageCountFormate(magazine.getPageCount()));
 
         //Description
-        ((TextView) MagazineDetailsBSheet.findViewById(R.id.textMagazine)).setText(magazine.getDescription());
+        ((TextView) MagazineDetailsBSheet.findViewById(R.id.textMagazine)).setText(ViewUtil.getMagazineDescription(magazine.getDescription()));
 
         //Like Button
         final ImageView imageViewLike = MagazineDetailsBSheet.findViewById(R.id.btn_like);

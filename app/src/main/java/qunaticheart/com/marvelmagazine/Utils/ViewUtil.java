@@ -1,6 +1,8 @@
 package qunaticheart.com.marvelmagazine.Utils;
 
 import android.app.Activity;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
@@ -43,7 +45,7 @@ public class ViewUtil {
         if (number <= 0) {
             return "";
         } else if (number == 1) {
-            return number + " Page";
+            return "One Page";
         } else {
             return number + " Pages";
         }
@@ -66,9 +68,17 @@ public class ViewUtil {
         }
     }
 
-    public static String getMagazineTitleWithoutNumber(String format) {
-        String[] title = format.split("#");
+    public static String getMagazineTitleWithoutNumber(String Magazinetitle) {
+        String[] title = Magazinetitle.split("#");
         return title[0];
+    }
+
+    public static Spanned getMagazineDescription(String description) {
+        if (description == null) {
+            return Html.fromHtml("No Description");
+        } else {
+            return Html.fromHtml(description);
+        }
     }
 
     //==============================================================================================
