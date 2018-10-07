@@ -90,9 +90,13 @@ public class MagazineActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent webview = new Intent(activity, WebViewActivity.class);
-                    webview.putExtra(WebViewActivity.webviewKey, magazine.getUrls().get(0).getUrl());
-                    ActivityUtil.callActivity(activity, webview, false);
+                    if (connected) {
+                        Intent webview = new Intent(activity, WebViewActivity.class);
+                        webview.putExtra(WebViewActivity.webviewKey, magazine.getUrls().get(0).getUrl());
+                        ActivityUtil.callActivity(activity, webview, false);
+                    } else {
+                        LoggerUtils.callToast(activity, getResources().getString(R.string.msg_no_connection));
+                    }
 
                 }
             });
