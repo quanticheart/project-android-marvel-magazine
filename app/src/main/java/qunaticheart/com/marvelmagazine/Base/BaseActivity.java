@@ -2,14 +2,18 @@ package qunaticheart.com.marvelmagazine.Base;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import qunaticheart.com.marvelmagazine.BroadCast.MyReceiver;
 import qunaticheart.com.marvelmagazine.BroadCast.SystemUtil;
@@ -97,8 +101,27 @@ public abstract class BaseActivity extends AppCompatActivity implements SystemUt
     //==============================================================================================
 
     private void showSnackbar() {
-        snackbar = Snackbar.make(Objects.requireNonNull(activity.getCurrentFocus()), R.string.msg_no_connection, Snackbar.LENGTH_INDEFINITE);
-        snackbar.show();
+
+        final Runnable setImageRunnable = new Runnable() {
+            @Override
+            public void run() {
+                snackbar = Snackbar.make(Objects.requireNonNull(activity.getCurrentFocus()), R.string.msg_no_connection, Snackbar.LENGTH_INDEFINITE);
+                snackbar.show();
+//next Update
+//                startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), 0);
+
+            }
+        };
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                activity.runOnUiThread(setImageRunnable);
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(task, 2000);
+
     }
 
     private void clearSnackbar() {

@@ -1,17 +1,26 @@
 package qunaticheart.com.marvelmagazine.Base;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import qunaticheart.com.marvelmagazine.R;
 import qunaticheart.com.marvelmagazine.Utils.GlideUtil;
@@ -29,6 +38,8 @@ public class WebViewActivity extends BaseActivity {
     private TextView labelLoading;
     private ImageView imgFavicon;
     private ProgressBar progressBar;
+    //
+    private boolean connected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +48,7 @@ public class WebViewActivity extends BaseActivity {
 
         initVars();
         initActions();
+        dontShowSnackbarConnection();
 
     }
 
@@ -61,7 +73,7 @@ public class WebViewActivity extends BaseActivity {
     //==============================================================================================
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void loadWebViewLoad(WebView webview, String url) {
+    private void loadWebViewLoad(final WebView webview, String url) {
 
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -81,9 +93,46 @@ public class WebViewActivity extends BaseActivity {
                 super.onPageFinished(view, url);
                 showWebview();
             }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+
+                try {
+                    webView.stopLoading();
+                } catch (Exception e) {
+                }
+
+//                if (webView.canGoBack()) {
+//                    webView.goBack();
+//                }
+
+                //in process 07/10/18
+
+                webView.loadUrl("about:blank");
+                AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage("Check your internet connection and try again.");
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Try Again", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        startActivity(getIntent());
+                    }
+                });
+
+                alertDialog.show();
+                super.onReceivedError(view, request, error);
+
+            }
         });
 
         webview.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public void onReceivedIcon(WebView view, Bitmap icon) {
+                super.onReceivedIcon(view, icon);
+                GlideUtil.initGlide(activity, icon, imgFavicon);
+            }
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -101,6 +150,7 @@ public class WebViewActivity extends BaseActivity {
     //==============================================================================================
 
     private void showLoading(String url, Bitmap favicon) {
+        labelLoading.setText(getResources().getString(R.string.label_loading));
         loadingLayout.setVisibility(View.VISIBLE);
         GlideUtil.initGlide(activity, favicon, imgFavicon);
         webView.setVisibility(View.GONE);
@@ -121,6 +171,28 @@ public class WebViewActivity extends BaseActivity {
 
     //==============================================================================================
     //
+    // @Connections
+    //
+    //==============================================================================================
+
+    @Override
+    public void ConnectionOK() {
+        super.ConnectionOK();
+        if (loadingLayout.getVisibility() == View.VISIBLE) {
+            labelLoading.setText(getResources().getString(R.string.label_loading));
+        }
+    }
+
+    @Override
+    public void ConnectionFail() {
+        super.ConnectionFail();
+        if (loadingLayout.getVisibility() == View.VISIBLE) {
+            labelLoading.setText(getResources().getString(R.string.msg_no_connection));
+        }
+    }
+
+    //==============================================================================================
+    //
     // @Override
     //
     //==============================================================================================
@@ -131,6 +203,7 @@ public class WebViewActivity extends BaseActivity {
             webView.goBack();
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 }
