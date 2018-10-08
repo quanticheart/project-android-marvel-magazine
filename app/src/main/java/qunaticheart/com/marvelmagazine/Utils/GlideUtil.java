@@ -35,6 +35,10 @@ public class GlideUtil {
         Glide.with(activity).applyDefaultRequestOptions(getRequestOptions()).load(url).into(imageView);
     }
 
+    public static void initGlideAsGif(Activity activity, Drawable url, ImageView imageView) {
+        Glide.with(activity).applyDefaultRequestOptions(getRequestOptions()).asGif().load(url).into(imageView);
+    }
+
     public static void initGlide(Activity activity, Object url, ImageView imageView) {
         Glide.with(activity).applyDefaultRequestOptions(getRequestOptions()).load(url).into(imageView);
     }

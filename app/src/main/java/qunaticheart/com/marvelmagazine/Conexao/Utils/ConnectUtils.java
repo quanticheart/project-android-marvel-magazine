@@ -2,16 +2,22 @@ package qunaticheart.com.marvelmagazine.Conexao.Utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import qunaticheart.com.marvelmagazine.Conexao.Model.ListMagazine;
+import qunaticheart.com.marvelmagazine.R;
+import qunaticheart.com.marvelmagazine.Utils.GlideUtil;
 import retrofit2.Response;
 
 import static qunaticheart.com.marvelmagazine.Utils.LoggerUtils.LogE;
@@ -77,17 +83,40 @@ public class ConnectUtils {
     }
 
     public static void showSimpleLoadingDialog(Activity activity) {
-        mProgressDialog = new ProgressDialog(activity);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage("Loading...");
-        mProgressDialog.setCanceledOnTouchOutside(false);
-        mProgressDialog.show();
+//        mProgressDialog = new ProgressDialog(activity);
+//        mProgressDialog.setIndeterminate(true);
+//        mProgressDialog.setMessage("Loading...");
+//        mProgressDialog.setCanceledOnTouchOutside(false);
+//        mProgressDialog.show();
+        showGifLoad(activity);
     }
 
     public static void hideSimpleLoadingDialog() {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
+//        if (mProgressDialog != null) {
+//            mProgressDialog.dismiss();
+//        }
+//        mProgressDialog = null;
+        closeGifLoad();
+    }
+
+    private static Dialog dialogSearsh = null;
+
+    private static void showGifLoad(Activity activity) {
+        dialogSearsh = new Dialog(activity);
+        dialogSearsh.setContentView(R.layout.dialog_loading);
+        dialogSearsh.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+//        ImageView load = dialogSearsh.findViewById(R.id.imgload);
+//        GlideUtil.initGlide(activity, activity.getResources().getDrawable(R.drawable.marvel_loader), load);
+
+        dialogSearsh.create();
+        dialogSearsh.show();
+    }
+
+    private static void closeGifLoad() {
+        if (dialogSearsh != null) {
+            dialogSearsh.dismiss();
         }
-        mProgressDialog = null;
+        dialogSearsh = null;
     }
 }
