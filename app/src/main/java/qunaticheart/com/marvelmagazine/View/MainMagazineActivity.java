@@ -75,7 +75,7 @@ public class MainMagazineActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setFirstContainerView(R.layout.activity_main);
 
         initVars();
         initActions();
@@ -142,7 +142,7 @@ public class MainMagazineActivity extends BaseActivity {
 
     public void openSearhDialog() {
 
-        dialogSearsh = new Dialog(activity, R.style.DialogFullscreen);
+        dialogSearsh = new Dialog(this, R.style.DialogFullscreen);
         dialogSearsh.setContentView(R.layout.dialog_searchbar);
         Objects.requireNonNull(dialogSearsh.getWindow()).getAttributes().windowAnimations = R.style.DialogNoAnimation;
 

@@ -44,7 +44,7 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_webview);
+        setFirstContainerView(R.layout.activity_webview);
 
         initVars();
         initActions();

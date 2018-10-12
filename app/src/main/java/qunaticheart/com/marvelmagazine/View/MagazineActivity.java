@@ -42,7 +42,7 @@ public class MagazineActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_magazine);
+        setFirstContainerView(R.layout.activity_magazine);
 
         magazine = verifyIntentMagazineData();
 
